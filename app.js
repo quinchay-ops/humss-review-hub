@@ -5,12 +5,12 @@ import { curriculum, questions } from "./question-bank.js";
 
 // 1) Paste your Firebase web app configuration here.
 const firebaseConfig = {
-  apiKey: "PASTE_API_KEY",
-  authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
-  projectId: "PASTE_PROJECT_ID",
-  storageBucket: "PASTE_PROJECT_ID.appspot.com",
-  messagingSenderId: "PASTE_MESSAGING_SENDER_ID",
-  appId: "PASTE_APP_ID"
+  apiKey: "AIzaSyAX60BFhb-yz50dRi0WlVsMznEmRmDDo2U",
+  authDomain: "humss-review-hub.firebaseapp.com",
+  projectId: "humss-review-hub",
+  storageBucket: "humss-review-hub.firebasestorage.app",
+  messagingSenderId: "586899826711",
+  appId: "1:586899826711:web:0e65df4b2ac89734dc1452"
 };
 
 const configured = firebaseConfig.apiKey !== "PASTE_API_KEY";
