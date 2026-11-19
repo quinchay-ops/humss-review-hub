@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#edf4ff">
+<title>HUMSS Review Hub | Grade 12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+<header class="topbar">
+  <a class="brand" href="#" id="homeBrand"><span class="brand-mark">H</span><span>HUMSS <b>REVIEW HUB</b><small>GRADE 12 · SECOND SEMESTER</small></span></a>
+  <div class="top-actions"><span id="userLabel" class="muted"></span><button id="logoutBtn" class="button ghost hidden">Log out</button></div>
+</header>
+<main id="app" class="shell">
+  <section id="authView" class="auth-layout">
+    <div class="intro">
+      <span class="eyebrow">YOUR SEMESTER, ONE REVIEW HUB</span>
+      <h1>Learn smarter.<br><span>Review with purpose.</span></h1>
+      <p>A focused reviewer built around the Grade 12 HUMSS curriculum guide of the Schools Division of General Santos City.</p>
+      <div class="intro-pills"><span>5 subjects</span><span>Topic-based review</span><span>Progress tracking</span></div>
+    </div>
+    <div class="panel auth-card">
+      <div class="tabs"><button class="tab active" data-auth="login">Log in</button><button class="tab" data-auth="signup">Create account</button></div>
+      <form id="authForm">
+        <div id="nameField" class="field hidden"><label>Full name</label><input id="fullName" autocomplete="name" placeholder="Your name"></div>
+        <div class="field"><label>Email address</label><input id="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
+        <div class="field"><label>Password</label><input id="password" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters"></div>
+        <button id="authSubmit" class="button primary full" type="submit">Log in</button>
+        <p id="authMessage" class="message" aria-live="polite"></p>
+      </form>
+      <p class="tiny muted">Your account and review history are stored securely through Firebase after setup.</p>
+    </div>
+  </section>
+
+  <section id="dashboardView" class="hidden">
+    <div class="welcome-row"><div><span class="eyebrow">STUDENT DASHBOARD</span><h1>Welcome back, <span id="welcomeName">Learner</span>.</h1><p class="muted">Choose a subject and start reviewing at your own pace.</p></div><div class="mini-stat"><b id="attemptCount">0</b><span>completed reviews</span></div></div>
+    <div class="section-heading"><div><h2>Your subjects</h2><p class="muted">All five subjects from your semester guide.</p></div></div>
+    <div id="subjectGrid" class="subject-grid"></div>
+    <div class="panel history-panel"><div class="section-heading"><div><h2>Recent activity</h2><p class="muted">Your latest completed review sessions.</p></div></div><div id="historyList" class="history-list"><p class="muted">No completed reviews yet.</p></div></div>
+  </section>
+
+  <section id="setupView" class="hidden">
+    <button class="back-link" id="backDashboard">← Dashboard</button>
+    <div class="page-heading"><span class="eyebrow" id="setupCode">SUBJECT</span><h1 id="setupTitle">Choose your review</h1><p class="muted" id="setupDescription"></p></div>
+    <div class="panel setup-panel">
+      <div class="form-grid">
+        <div class="field wide"><label>Quarter / unit</label><select id="unitSelect"></select></div>
+        <div class="field"><label>Review format</label><select id="modeSelect"><option value="mcq">Multiple choice</option><option value="fill">Fill in the blank</option><option value="flash">Flashcards</option></select></div>
+        <div class="field"><label>Difficulty</label><select id="difficultySelect"><option value="all">Mixed difficulty</option><option value="easy">Easy</option><option value="hard">Hard</option></select></div>
+        <div class="field"><label>Number of items</label><select id="countSelect"><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option><option>50</option></select></div>
+        <div class="field"><label>Session timer</label><select id="sessionTimer"><option value="off">No overall timer</option><option value="on">Timed session</option></select></div>
+        <div class="field"><label>Time per question / card</label><select id="itemTimer"><option value="off">No question timer</option><option value="30">30 seconds</option><option value="45">45 seconds</option><option value="60">60 seconds</option><option value="90">90 seconds</option></select></div>
+      </div>
+      <p class="hint">The question timer is optional and separate from the overall session timer. Flashcards are self-paced unless you choose a card timer.</p>
+      <button id="startReview" class="button primary">Start review <span>→</span></button>
+      <p id="setupMessage" class="message"></p>
+    </div>
+    <div class="panel coverage-panel"><h3>Topics covered in this unit</h3><div id="topicList" class="topic-chips"></div></div>
+  </section>
+
+  <section id="reviewView" class="hidden">
+    <div class="review-top"><button class="back-link" id="exitReview">← Exit review</button><div class="review-meta"><span id="reviewSubject"></span><span id="progressText">1 / 5</span></div></div>
+    <div class="progress-track"><div id="progressBar"></div></div>
+    <div class="timer-row"><span id="questionType" class="tag">KNOWLEDGE</span><span id="timerDisplay" class="timer hidden">00:30</span></div>
+    <div class="panel question-panel">
+      <div class="question-kicker" id="questionKicker">QUESTION 01</div>
+      <h2 id="questionText"></h2>
+      <div id="answerArea"></div>
+      <div id="feedback" class="feedback hidden"></div>
+      <div class="question-actions"><button id="checkAnswer" class="button primary">Check answer</button><button id="nextQuestion" class="button primary hidden">Continue →</button></div>
+    </div>
+  </section>
+
+  <section id="resultsView" class="hidden">
+    <div class="page-heading"><span class="eyebrow">REVIEW COMPLETED</span><h1 id="resultTitle">Your results</h1><p class="muted" id="resultSubtitle"></p></div>
+    <div class="panel score-panel"><div class="score-circle"><b id="scoreValue">0%</b><span>score</span></div><div><h2 id="scoreMessage">Good effort.</h2><p id="scoreDetail" class="muted"></p><button id="backAfterResult" class="button primary">Back to dashboard</button></div></div>
+    <div class="panel"><div class="section-heading"><div><h2>Review your answers</h2><p class="muted">See what you answered, the correct answer, and why.</p></div></div><div id="answerReview" class="answer-review"></div></div>
+  </section>
+
+  <section id="adminView" class="hidden">
+    <div class="welcome-row"><div><span class="eyebrow">ADMINISTRATION</span><h1>Platform overview</h1><p class="muted">Account and review activity stored in your Firebase project.</p></div><button id="adminBack" class="button ghost">Student view</button></div>
+    <div class="admin-stats"><div class="panel"><b id="adminUsers">—</b><span>registered students</span></div><div class="panel"><b id="adminAttempts">—</b><span>completed reviews</span></div><div class="panel"><b id="adminAverage">—</b><span>average score</span></div></div>
+    <div class="panel"><h2>Registered students</h2><div id="adminUserList" class="history-list">Loading...</div></div>
+    <div class="panel"><h2>Recent review activity</h2><div id="adminAttemptList" class="history-list">Loading...</div></div>
+    <p class="tiny muted">Admin access is controlled by the Firestore /admins collection and security rules. Do not make yourself an admin using a public sign-up form.</p>
+  </section>
+</main>
+<footer><span>HUMSS REVIEW HUB</span><span>Built around the provided Grade 12 semester curriculum guide.</span></footer>
+<div id="toast" class="toast" role="status"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
